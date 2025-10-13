@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { CalculatorInputs, CalculationResult } from '@/types';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
@@ -15,19 +16,19 @@ export interface Calculation {
   bik_rate: number;
   student_loan_plan: string;
   pension_contribution: number;
-  result_data: any;
+  result_data: Record<string, unknown>;
 }
 
 export interface Analytics {
   id: string;
   event_type: string;
   calculation_id?: string;
-  metadata: any;
+  metadata: Record<string, unknown>;
   created_at: string;
 }
 
 // Database functions
-export async function saveCalculation(inputs: any, result: any) {
+export async function saveCalculation(inputs: CalculatorInputs, result: CalculationResult) {
   try {
     const { data, error } = await supabase
       .from('calculations')
@@ -52,7 +53,7 @@ export async function saveCalculation(inputs: any, result: any) {
   }
 }
 
-export async function trackEvent(eventType: string, metadata: any = {}) {
+export async function trackEvent(eventType: string, metadata: Record<string, unknown> = {}) {
   try {
     const { data, error } = await supabase
       .from('analytics')
