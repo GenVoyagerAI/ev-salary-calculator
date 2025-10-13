@@ -1,8 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 import { CalculatorInputs, CalculationResult } from '@/types';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key';
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
@@ -29,6 +29,12 @@ export interface Analytics {
 
 // Database functions
 export async function saveCalculation(inputs: CalculatorInputs, result: CalculationResult) {
+  // Skip database operations if Supabase isn't configured
+  if (supabaseUrl === 'https://placeholder.supabase.co' || supabaseAnonKey === 'placeholder-key') {
+    console.log('Supabase not configured, skipping database save');
+    return null;
+  }
+
   try {
     const { data, error } = await supabase
       .from('calculations')
@@ -54,6 +60,12 @@ export async function saveCalculation(inputs: CalculatorInputs, result: Calculat
 }
 
 export async function trackEvent(eventType: string, metadata: Record<string, unknown> = {}) {
+  // Skip database operations if Supabase isn't configured
+  if (supabaseUrl === 'https://placeholder.supabase.co' || supabaseAnonKey === 'placeholder-key') {
+    console.log('Supabase not configured, skipping event tracking');
+    return null;
+  }
+
   try {
     const { data, error } = await supabase
       .from('analytics')
