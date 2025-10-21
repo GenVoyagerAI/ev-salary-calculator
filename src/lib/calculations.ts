@@ -1,5 +1,7 @@
 import { CalculatorInputs, CalculationResult } from '@/types';
 import { TAX_BRACKETS, getTaxBracket, getStudentLoanThreshold, getStudentLoanRate, getBiKRate } from './tax-rates';
+import { BIK_FORECAST_RATES, getBikBandKey } from './bikForecastRates';
+import { getNext4TaxYears } from './taxYear';
 
 export function calculateSalarySacrifice(inputs: CalculatorInputs): CalculationResult {
   const {
@@ -165,3 +167,90 @@ export function formatMonthlyCurrency(amount: number): string {
     maximumFractionDigits: 2,
   }).format(amount);
 }
+
+// BiK Forecast Types and Functions
+export interface BikForecastYear {
+  taxYear: string;
+  bikRatePercent: string;
+  annualTax: string;
+  monthlyTax: string;
+  isCurrentYear: boolean;
+}
+
+export interface BikForecastResult {
+  forecast: BikForecastYear[];
+  totalAnnualTax: string;
+  totalMonthlyAverage: string;
+}
+
+/**
+ * Calculate 4-year BiK tax forecast
+ * 
+ * @param salary - Annual salary
+ * @param p11dValue - Car value (P11D)
+ * @param fuelType - Vehicle fuel type
+ * @param co2Emissions - CO2 emissions (optional, for petrol/diesel)
+ * @param taxRate - Current marginal tax rate (0.20, 0.40, 0.45)
+ * @returns Forecast data or null if unavailable
+ */
+export const calculateBikForecast = (
+  salary: number,
+  p11dValue: number,
+  fuelType: 'electric' | 'hybrid' | 'petrol',
+  co2Emissions: number | undefined,
+  taxRate: number
+): BikForecastResult | null => {
+  // Get the BiK band for this vehicle
+  const bandKey = getBikBandKey(fuelType, co2Emissions);
+  
+  // Get forecast rates for this band
+  const forecastRates = BIK_FORECAST_RATES[bandKey];
+  if (!forecastRates) {
+    console.warn(`No forecast data available for band: ${bandKey}`);
+    return null;
+  }
+  
+  // Get next 4 tax years
+  const taxYears = getNext4TaxYears();
+  const currentTaxYear = taxYears[0];
+  
+  // Calculate BiK tax for each year
+  const forecast: BikForecastYear[] = [];
+  let totalAnnualTax = 0;
+  
+  for (const taxYear of taxYears) {
+    const bikRate = forecastRates[taxYear];
+    
+    // If rate not available for this year, skip it
+    if (bikRate === undefined) {
+      console.warn(`No BiK rate for ${taxYear} in band ${bandKey}`);
+      continue;
+    }
+    
+    // Calculate BiK tax
+    const annualBenefit = p11dValue * bikRate;
+    const annualTax = annualBenefit * taxRate;
+    const monthlyTax = annualTax / 12;
+    
+    totalAnnualTax += annualTax;
+    
+    forecast.push({
+      taxYear,
+      bikRatePercent: (bikRate * 100).toFixed(1) + '%',
+      annualTax: '£' + annualTax.toFixed(0),
+      monthlyTax: '£' + monthlyTax.toFixed(2),
+      isCurrentYear: taxYear === currentTaxYear,
+    });
+  }
+  
+  // If no forecast data available, return null
+  if (forecast.length === 0) {
+    return null;
+  }
+  
+  return {
+    forecast,
+    totalAnnualTax: '£' + totalAnnualTax.toFixed(0),
+    totalMonthlyAverage: '£' + (totalAnnualTax / 12 / forecast.length).toFixed(2),
+  };
+};
