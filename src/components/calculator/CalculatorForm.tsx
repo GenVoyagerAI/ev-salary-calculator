@@ -10,8 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Badge } from '@/components/ui/badge';
-import { Calculator, Car, CreditCard, AlertTriangle, Share2, Copy } from 'lucide-react';
+import { Calculator, Car, AlertTriangle, Share2 } from 'lucide-react';
 
 const initialInputs: CalculatorInputs = {
   salary: 50000,

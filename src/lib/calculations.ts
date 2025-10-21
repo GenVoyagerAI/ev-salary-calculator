@@ -1,5 +1,5 @@
 import { CalculatorInputs, CalculationResult } from '@/types';
-import { TAX_BRACKETS, getTaxBracket, getStudentLoanThreshold, getStudentLoanRate, getBiKRate } from './tax-rates';
+import { TAX_BRACKETS, getTaxBracket, getStudentLoanThreshold, getStudentLoanRate } from './tax-rates';
 import { BIK_FORECAST_RATES, getBikBandKey } from './bikForecastRates';
 import { getNext4TaxYears } from './taxYear';
 
@@ -30,7 +30,7 @@ export function calculateSalarySacrifice(inputs: CalculatorInputs): CalculationR
 
   // Calculate pension contribution (employee + employer)
   const totalPensionContribution = (pensionContribution / 100) * adjustedSalary;
-  const employerPensionAmount = (employerPensionContribution / 100) * adjustedSalary;
+  // const employerPensionAmount = (employerPensionContribution / 100) * adjustedSalary;
 
   // Calculate net salary
   const netSalary = adjustedSalary - incomeTax - nationalInsurance - studentLoanRepayment - totalPensionContribution;

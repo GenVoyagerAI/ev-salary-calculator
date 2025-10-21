@@ -1,10 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   outputFileTracingRoot: __dirname,
-  experimental: {
-    // Enable if you want to use the app directory
-    appDir: true,
-  },
   // Optimize for production
   compress: true,
   poweredByHeader: false,

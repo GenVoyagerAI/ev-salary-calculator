@@ -28,7 +28,16 @@ const initialInputs: BikCalculatorInputs = {
 
 export default function BikCalculatorTab() {
   const [inputs, setInputs] = useState<BikCalculatorInputs>(initialInputs);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<{
+    p11dValue: number;
+    bikRate: number;
+    annualBenefit: number;
+    annualBikTax: number;
+    monthlyBikTax: number;
+    taxBracket: { rate: number; name: string };
+    fuelTypeLabel: string;
+    forecastData: any;
+  } | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
 
   const handleInputChange = (field: keyof BikCalculatorInputs, value: string | number) => {

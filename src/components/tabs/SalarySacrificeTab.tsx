@@ -5,10 +5,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Alert } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
 import { Calculator, Zap, Battery, Car } from 'lucide-react';
-import { getBikRate, getFuelTypeLabel } from '@/lib/co2-bik-rates';
+import { getBikRate } from '@/lib/co2-bik-rates';
 
 interface SalarySacrificeInputs {
   salary: number;
@@ -26,7 +26,18 @@ const initialInputs: SalarySacrificeInputs = {
 
 export default function SalarySacrificeTab() {
   const [inputs, setInputs] = useState<SalarySacrificeInputs>(initialInputs);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<{
+    monthlyLeaseCost: number;
+    incomeTaxSaved: number;
+    niSaved: number;
+    bikTax: number;
+    netMonthlyCost: number;
+    monthlySavings: number;
+    savingsPercentage: number;
+    taxBracket: { rate: number; name: string };
+    annualBiK: number;
+    netAnnualCost: number;
+  } | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
 
   const handleInputChange = (field: keyof SalarySacrificeInputs, value: string | number) => {
