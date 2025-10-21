@@ -9,13 +9,9 @@ import { Alert } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
 import { Calculator, Zap, Battery, Car } from 'lucide-react';
 import { getBikRate } from '@/lib/co2-bik-rates';
-
-interface SalarySacrificeInputs {
-  salary: number;
-  monthlyLeaseCost: number;
-  p11dValue: number;
-  fuelType: 'electric' | 'hybrid' | 'petrol';
-}
+import { formatCurrency, formatMonthlyCurrency } from '@/lib/utils';
+import { getTaxBracketInfo, getNationalInsuranceRate } from '@/lib/tax-rates';
+import { SalarySacrificeInputs } from '@/types';
 
 const initialInputs: SalarySacrificeInputs = {
   salary: 50000,
@@ -41,24 +37,10 @@ export default function SalarySacrificeTab() {
   const [isCalculating, setIsCalculating] = useState(false);
 
   const handleInputChange = (field: keyof SalarySacrificeInputs, value: string | number) => {
-    console.log('Salary Sacrifice - Input change:', field, value);
     setInputs(prev => ({
       ...prev,
       [field]: field === 'fuelType' ? value : (typeof value === 'string' ? parseFloat(value) || 0 : value)
     }));
-  };
-
-  // Tax bracket determination
-  const getTaxBracket = (salary: number) => {
-    if (salary <= 50270) return { rate: 0.20, name: 'Basic' };
-    if (salary <= 125140) return { rate: 0.40, name: 'Higher' };
-    return { rate: 0.45, name: 'Additional' };
-  };
-
-  // NI rate (simplified)
-  const getNIRate = (salary: number) => {
-    if (salary <= 50270) return 0.08;
-    return 0.02;
   };
 
   const handleCalculate = async () => {
@@ -72,8 +54,8 @@ export default function SalarySacrificeTab() {
       
       // Main calculation
       const annualLeaseCost = monthlyLeaseCost * 12;
-      const taxBracket = getTaxBracket(salary);
-      const niRate = getNIRate(salary);
+      const taxBracket = getTaxBracketInfo(salary);
+      const niRate = getNationalInsuranceRate(salary);
       const bikRate = getBikRate(fuelType);
 
       // Savings from salary sacrifice
@@ -113,24 +95,6 @@ export default function SalarySacrificeTab() {
     }
   };
 
-  const formatCurrency = (amount: number): string => {
-    return new Intl.NumberFormat('en-GB', {
-      style: 'currency',
-      currency: 'GBP',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-
-  const formatMonthlyCurrency = (amount: number): string => {
-    return new Intl.NumberFormat('en-GB', {
-      style: 'currency',
-      currency: 'GBP',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(amount);
-  };
-
   return (
     <div className="max-w-6xl mx-auto p-6">
       <div className="text-center space-y-2 mb-8">
@@ -166,7 +130,7 @@ export default function SalarySacrificeTab() {
                 max="200000"
               />
               <p className="text-sm text-gray-500">
-                Tax Bracket: {getTaxBracket(inputs.salary).name} ({getTaxBracket(inputs.salary).rate * 100}%)
+                Tax Bracket: {getTaxBracketInfo(inputs.salary).name} ({getTaxBracketInfo(inputs.salary).rate * 100}%)
               </p>
             </div>
 

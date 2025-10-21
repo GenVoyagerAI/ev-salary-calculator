@@ -11,13 +11,9 @@ import { Calculator, Zap, Battery, Car, Info } from 'lucide-react';
 import { getBikRate, getFuelTypeLabel } from '@/lib/co2-bik-rates';
 import { calculateBikForecast } from '@/lib/calculations';
 import { BikForecast } from '@/components/BikForecast';
-
-interface BikCalculatorInputs {
-  salary: number;
-  p11dValue: number;
-  fuelType: 'electric' | 'hybrid' | 'petrol';
-  co2Emissions: number;
-}
+import { formatCurrency, formatMonthlyCurrency } from '@/lib/utils';
+import { getTaxBracketInfo } from '@/lib/tax-rates';
+import { BikCalculatorInputs } from '@/types';
 
 const initialInputs: BikCalculatorInputs = {
   salary: 50000,
@@ -51,18 +47,10 @@ export default function BikCalculatorTab() {
   const [isCalculating, setIsCalculating] = useState(false);
 
   const handleInputChange = (field: keyof BikCalculatorInputs, value: string | number) => {
-    console.log('BiK Calculator - Input change:', field, value);
     setInputs(prev => ({
       ...prev,
       [field]: field === 'fuelType' ? value : (typeof value === 'string' ? parseFloat(value) || 0 : value)
     }));
-  };
-
-  // Tax bracket determination
-  const getTaxBracket = (salary: number) => {
-    if (salary <= 50270) return { rate: 0.20, name: 'Basic' };
-    if (salary <= 125140) return { rate: 0.40, name: 'Higher' };
-    return { rate: 0.45, name: 'Additional' };
   };
 
   const handleCalculate = async () => {
@@ -79,7 +67,7 @@ export default function BikCalculatorTab() {
       
       // Calculate BiK tax
       const annualBenefit = p11dValue * bikRate;
-      const taxBracket = getTaxBracket(salary);
+      const taxBracket = getTaxBracketInfo(salary);
       const annualBikTax = annualBenefit * taxBracket.rate;
       const monthlyBikTax = annualBikTax / 12;
 
@@ -107,24 +95,6 @@ export default function BikCalculatorTab() {
     } finally {
       setIsCalculating(false);
     }
-  };
-
-  const formatCurrency = (amount: number): string => {
-    return new Intl.NumberFormat('en-GB', {
-      style: 'currency',
-      currency: 'GBP',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-
-  const formatMonthlyCurrency = (amount: number): string => {
-    return new Intl.NumberFormat('en-GB', {
-      style: 'currency',
-      currency: 'GBP',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(amount);
   };
 
   return (
@@ -162,7 +132,7 @@ export default function BikCalculatorTab() {
                 max="200000"
               />
               <p className="text-sm text-gray-500">
-                Tax Bracket: {getTaxBracket(inputs.salary).name} ({getTaxBracket(inputs.salary).rate * 100}%)
+                Tax Bracket: {getTaxBracketInfo(inputs.salary).name} ({getTaxBracketInfo(inputs.salary).rate * 100}%)
               </p>
             </div>
 

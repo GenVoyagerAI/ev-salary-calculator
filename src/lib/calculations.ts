@@ -2,6 +2,10 @@ import { CalculatorInputs, CalculationResult } from '@/types';
 import { TAX_BRACKETS, getTaxBracket, getStudentLoanThreshold, getStudentLoanRate } from './tax-rates';
 import { BIK_FORECAST_RATES, getBikBandKey } from './bikForecastRates';
 import { getNext4TaxYears } from './taxYear';
+import { formatCurrency, formatMonthlyCurrency } from './utils';
+
+// Re-export formatting utilities for backward compatibility
+export { formatCurrency, formatMonthlyCurrency };
 
 export function calculateSalarySacrifice(inputs: CalculatorInputs): CalculationResult {
   const {
@@ -147,24 +151,6 @@ function calculateBiKTax(carValue: number, bikRate: number, salary: number): num
   const taxBracket = getTaxBracket(salary);
   const taxRate = taxBracket === 'basic' ? 0.20 : taxBracket === 'higher' ? 0.40 : 0.45;
   return (carValue * bikRate / 100) * taxRate;
-}
-
-export function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat('en-GB', {
-    style: 'currency',
-    currency: 'GBP',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(amount);
-}
-
-export function formatMonthlyCurrency(amount: number): string {
-  return new Intl.NumberFormat('en-GB', {
-    style: 'currency',
-    currency: 'GBP',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(amount);
 }
 
 // BiK Forecast Types and Functions

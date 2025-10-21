@@ -64,3 +64,19 @@ export interface StudentLoanRates {
 export interface BiKRates {
   [key: number]: number; // CO2 emissions to BiK rate percentage
 }
+
+// Salary Sacrifice Calculator Input Types
+export interface SalarySacrificeInputs {
+  salary: number;
+  monthlyLeaseCost: number;
+  p11dValue: number;
+  fuelType: 'electric' | 'hybrid' | 'petrol';
+}
+
+// BiK Calculator Input Types
+export interface BikCalculatorInputs {
+  salary: number;
+  p11dValue: number;
+  fuelType: 'electric' | 'hybrid' | 'petrol';
+  co2Emissions: number;
+}

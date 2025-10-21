@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 import { CalculatorInputs, CalculationResult } from '@/types';
-import { calculateSalarySacrifice, formatCurrency, formatMonthlyCurrency } from '@/lib/calculations';
+import { calculateSalarySacrifice } from '@/lib/calculations';
+import { formatCurrency, formatMonthlyCurrency } from '@/lib/utils';
+import { getTaxBracketInfo } from '@/lib/tax-rates';
 import { saveCalculation, trackEvent } from '@/lib/supabase';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -67,9 +69,8 @@ export default function CalculatorForm() {
   };
 
   const getTaxBracket = (salary: number) => {
-    if (salary <= 50270) return 'Basic Rate (20%)';
-    if (salary <= 125140) return 'Higher Rate (40%)';
-    return 'Additional Rate (45%)';
+    const bracket = getTaxBracketInfo(salary);
+    return `${bracket.name} Rate (${bracket.rate * 100}%)`;
   };
 
   const getStudentLoanPlanName = (plan: string) => {

@@ -76,6 +76,29 @@ export function getTaxBracket(salary: number): 'basic' | 'higher' | 'additional'
   }
 }
 
+// Enhanced tax bracket info with rate and name
+export interface TaxBracketInfo {
+  rate: number;
+  name: 'Basic' | 'Higher' | 'Additional';
+}
+
+export function getTaxBracketInfo(salary: number): TaxBracketInfo {
+  if (salary <= TAX_BRACKETS.basicRate.threshold) {
+    return { rate: 0.20, name: 'Basic' };
+  } else if (salary <= TAX_BRACKETS.higherRate.threshold) {
+    return { rate: 0.40, name: 'Higher' };
+  }
+  return { rate: 0.45, name: 'Additional' };
+}
+
+// National Insurance rate helper
+export function getNationalInsuranceRate(salary: number): number {
+  if (salary <= TAX_BRACKETS.basicRate.threshold) {
+    return 0.12;
+  }
+  return 0.02;
+}
+
 export function getStudentLoanThreshold(plan: string): number {
   switch (plan) {
     case 'plan1':
