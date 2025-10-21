@@ -10,8 +10,7 @@ export function calculateSalarySacrifice(inputs: CalculatorInputs): CalculationR
     monthlyLease,
     bikRate,
     studentLoanPlan,
-    pensionContribution,
-    employerPensionContribution
+    pensionContribution
   } = inputs;
 
   // Annual values

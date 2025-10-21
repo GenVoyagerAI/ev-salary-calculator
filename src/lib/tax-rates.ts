@@ -60,7 +60,7 @@ export const BIK_RATES: BiKRates = {
   150: 2   // 150g+ CO2/km - 2% BiK
 };
 
-export function getBiKRate(_co2Emissions: number): number {
+export function getBiKRate(): number {
   // For electric vehicles, BiK rate is typically 2% regardless of CO2 emissions
   // This function could be extended for hybrid vehicles
   return 2;

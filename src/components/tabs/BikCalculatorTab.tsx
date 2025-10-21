@@ -36,7 +36,17 @@ export default function BikCalculatorTab() {
     monthlyBikTax: number;
     taxBracket: { rate: number; name: string };
     fuelTypeLabel: string;
-    forecastData: any;
+    forecastData: {
+      forecast: Array<{
+        taxYear: string;
+        bikRatePercent: string;
+        annualTax: string;
+        monthlyTax: string;
+        isCurrentYear: boolean;
+      }>;
+      totalAnnualTax: string;
+      totalMonthlyAverage: string;
+    } | null;
   } | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
 
