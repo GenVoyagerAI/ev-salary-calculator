@@ -10,18 +10,33 @@ export default function Home() {
 
       {/* Content Section */}
       <div className="container-1440 py-16">
-        <div className="space-y-6 text-gray-900">
-          <p className="text-lg leading-relaxed">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-            industry&apos;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-            scrambled it to make a type specimen book.
-          </p>
-          <p className="text-lg leading-relaxed">
-            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially
-            unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-            passages, and more recently with desktop publishing software like Aldus PageMaker including versions
-            of Lorem Ipsum.
-          </p>
+        <div className="space-y-8 text-gray-900">
+          <div className="space-y-4">
+            <h2 className="text-3xl font-bold text-gray-900">
+              Calculate Your Electric Vehicle Salary Sacrifice Savings
+            </h2>
+            <p className="text-lg leading-relaxed">
+              SalSacEV is the UK&apos;s leading free EV salary sacrifice calculator. Whether you&apos;re an employee considering an electric company car or an employer looking to understand the benefits, our calculator provides instant, accurate tax savings calculations for electric vehicle schemes.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-2xl font-semibold text-gray-900">
+              Why Choose Electric Vehicle Salary Sacrifice?
+            </h3>
+            <p className="text-lg leading-relaxed">
+              Electric vehicles benefit from the lowest Benefit in Kind (BIK) tax rates in the UK, currently just 2% for pure electric cars. This makes EV salary sacrifice schemes incredibly tax-efficient for both employees and employers. Our calculator helps you understand exactly how much you could save on income tax and National Insurance contributions when choosing an electric company car through a salary sacrifice arrangement.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-2xl font-semibold text-gray-900">
+              How Our EV BIK Calculator Works
+            </h3>
+            <p className="text-lg leading-relaxed">
+              Simply enter your vehicle&apos;s P11D value, fuel type, CO2 emissions, and income tax rate. Our calculator instantly shows your annual and monthly benefit value, helping you make informed decisions about electric company car schemes. Perfect for HR managers, fleet managers, and employees exploring green company car options.
+            </p>
+          </div>
         </div>
       </div>
 

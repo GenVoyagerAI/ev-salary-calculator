@@ -23,8 +23,8 @@ export default function Hero({ showCta = false }: HeroProps) {
 
       {/* Content */}
       <div className="relative z-10 text-center text-white space-y-6 px-6">
-        <h1 className="text-5xl md:text-6xl font-bold">
-          Salary Sacrifice Calculator
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+          EV Salary Sacrifice Calculator: Calculate Your Electric Company Car Savings
         </h1>
         {showCta && (
           <Link href="/calculator" className="cursor-pointer">
