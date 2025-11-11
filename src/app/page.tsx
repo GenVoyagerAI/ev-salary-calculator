@@ -1,47 +1,31 @@
-'use client';
-
-import { useState } from 'react';
-import TabNavigation from '@/components/TabNavigation';
-import SalarySacrificeTab from '@/components/tabs/SalarySacrificeTab';
-import BikCalculatorTab from '@/components/tabs/BikCalculatorTab';
+import Navigation from '@/components/Navigation';
+import Hero from '@/components/Hero';
+import Footer from '@/components/Footer';
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<'salary-sacrifice' | 'bik'>('salary-sacrifice');
-
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-6xl mx-auto p-6">
-        {/* Header */}
-        <div className="text-center space-y-2 mb-8">
-          <h1 className="text-4xl font-bold text-gray-900">UK Car Tax & Salary Sacrifice Calculator</h1>
-          <p className="text-lg text-gray-600">
-            Calculate your real costs with transparent, independent calculations
+      <Navigation />
+      <Hero showCta={true} />
+
+      {/* Content Section */}
+      <div className="container-1440 py-16">
+        <div className="space-y-6 text-gray-900">
+          <p className="text-lg leading-relaxed">
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+            industry&apos;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+            scrambled it to make a type specimen book.
+          </p>
+          <p className="text-lg leading-relaxed">
+            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially
+            unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+            passages, and more recently with desktop publishing software like Aldus PageMaker including versions
+            of Lorem Ipsum.
           </p>
         </div>
-
-        {/* Tab Navigation */}
-        <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
-
-        {/* Tab Content */}
-        {activeTab === 'salary-sacrifice' ? (
-          <SalarySacrificeTab />
-        ) : (
-          <BikCalculatorTab />
-        )}
       </div>
 
-      {/* Footer */}
-      <footer className="bg-white border-t py-8 mt-12">
-        <div className="max-w-4xl mx-auto px-6 text-center text-gray-600">
-          <p className="mb-2">
-            <strong>UK Car Tax & Salary Sacrifice Calculator</strong> - The UK&apos;s most transparent calculator
-          </p>
-          <p className="text-sm">
-            Built with Next.js, Supabase, and Tailwind CSS • 
-            <a href="https://github.com" className="text-blue-600 hover:underline ml-1">View on GitHub</a>
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
