@@ -9,14 +9,14 @@ import ShareButtons from '@/components/articles/ShareButtons';
 import TableOfContents from '@/components/articles/TableOfContents';
 import RelatedArticles from '@/components/articles/RelatedArticles';
 import { getArticleBySlug, getAllArticles, getRelatedArticles } from '@/lib/articles';
-import { Calendar, Clock, User } from 'lucide-react';
+import { Calendar, Clock } from 'lucide-react';
 import type { Metadata } from 'next';
 import { TableOfContentsItem } from '@/types/article';
 
 interface ArticlePageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 // Generate static params for all articles
@@ -29,7 +29,8 @@ export async function generateStaticParams() {
 
 // Generate metadata for each article
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
-  const article = getArticleBySlug(params.slug);
+  const { slug } = await params;
+  const article = getArticleBySlug(slug);
 
   if (!article) {
     return {
@@ -74,14 +75,15 @@ function extractHeadings(content: string): TableOfContentsItem[] {
   return headings;
 }
 
-export default function ArticlePage({ params }: ArticlePageProps) {
-  const article = getArticleBySlug(params.slug);
+export default async function ArticlePage({ params }: ArticlePageProps) {
+  const { slug } = await params;
+  const article = getArticleBySlug(slug);
 
   if (!article) {
     notFound();
   }
 
-  const relatedArticles = getRelatedArticles(params.slug);
+  const relatedArticles = getRelatedArticles(slug);
   const tableOfContents = extractHeadings(article.content);
   const articleUrl = `https://www.salsacev.com/articles/${article.slug}`;
 

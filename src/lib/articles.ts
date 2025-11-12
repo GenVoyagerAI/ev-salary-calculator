@@ -58,7 +58,7 @@ export function getArticleBySlug(slug: string): Article | null {
       ...(data as ArticleFrontmatter),
       readingTime: stats.text,
     };
-  } catch (error) {
+  } catch {
     return null;
   }
 }

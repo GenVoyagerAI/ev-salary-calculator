@@ -8,7 +8,6 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { getBikRate } from '@/lib/co2-bik-rates';
-import { getTaxBracketInfo } from '@/lib/tax-rates';
 import { formatCurrency } from '@/lib/utils';
 
 type ViewMode = 'annual' | 'monthly';
