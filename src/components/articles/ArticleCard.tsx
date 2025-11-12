@@ -53,7 +53,20 @@ export default function ArticleCard({ article }: ArticleCardProps) {
 
           {/* Author */}
           <div className="flex items-center mt-4 pt-4 border-t border-gray-100">
-            <div className="w-8 h-8 bg-gray-300 rounded-full mr-3"></div>
+            {article.author.avatar ? (
+              <div className="relative w-8 h-8 rounded-full mr-3 overflow-hidden">
+                <Image
+                  src={article.author.avatar}
+                  alt={article.author.name}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            ) : (
+              <div className="w-8 h-8 bg-gray-300 rounded-full mr-3 flex items-center justify-center text-gray-600 text-xs font-semibold">
+                {article.author.name.split(' ').map(n => n[0]).join('')}
+              </div>
+            )}
             <span className="text-sm font-medium text-gray-700">
               {article.author.name}
             </span>

@@ -13,7 +13,7 @@ export default function Navigation() {
             Articles
           </Link>
           <Link href="/calculator" className="cursor-pointer">
-            <Button className="bg-black text-white hover:bg-gray-800 rounded-md px-6 py-2">
+            <Button className="bg-black text-white hover:bg-gray-800 rounded-md px-6 py-2 cursor-pointer">
               Calculate
             </Button>
           </Link>

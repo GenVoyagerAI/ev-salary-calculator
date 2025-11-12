@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import Image from 'next/image';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import Breadcrumbs from '@/components/articles/Breadcrumbs';
@@ -96,22 +97,42 @@ export default function ArticlePage({ params }: ArticlePageProps) {
       <ReadingProgress />
 
       {/* Hero Section */}
-      <div className="bg-gray-300 py-16">
-        <div className="container-1440">
-          <Breadcrumbs
-            items={[
-              { label: 'Articles', href: '/articles' },
-              { label: article.title },
-            ]}
+      <div className="relative py-16 overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src={article.coverImage}
+            alt={article.title}
+            fill
+            className="object-cover"
+            priority
           />
-          <h1 className="text-4xl md:text-5xl font-bold text-white mt-8 max-w-4xl">
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-black/50"></div>
+        </div>
+
+        <div className="container-1440 relative z-10">
+          <h1 className="text-4xl md:text-5xl font-bold text-white max-w-4xl">
             {article.title}
           </h1>
 
           {/* Article Meta */}
           <div className="flex flex-wrap items-center gap-6 mt-8 text-white">
             <div className="flex items-center space-x-2">
-              <User className="w-5 h-5" />
+              {article.author.avatar ? (
+                <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-white">
+                  <Image
+                    src={article.author.avatar}
+                    alt={article.author.name}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              ) : (
+                <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-800 text-sm font-bold border-2 border-white">
+                  {article.author.name.split(' ').map(n => n[0]).join('')}
+                </div>
+              )}
               <span>{article.author.name}</span>
             </div>
             <div className="flex items-center space-x-2">
@@ -126,8 +147,20 @@ export default function ArticlePage({ params }: ArticlePageProps) {
         </div>
       </div>
 
+      {/* Breadcrumbs */}
+      <div className="bg-gray-50 pt-8">
+        <div className="container-1440">
+          <Breadcrumbs
+            items={[
+              { label: 'Articles', href: '/articles' },
+              { label: article.title },
+            ]}
+          />
+        </div>
+      </div>
+
       {/* Article Content */}
-      <div className="container-1440 py-16">
+      <div className="container-1440 py-8 pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Sidebar - Table of Contents */}
           <aside className="hidden lg:block lg:col-span-3">

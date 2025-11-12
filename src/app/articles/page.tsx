@@ -21,7 +21,7 @@ export default function ArticlesPage() {
       <Navigation />
 
       {/* Hero Section */}
-      <div className="bg-gray-300 py-20">
+      <div className="bg-black py-20">
         <div className="container-1440">
           <h1 className="text-5xl md:text-6xl font-bold text-white text-center">
             Articles

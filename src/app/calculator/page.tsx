@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Navigation from '@/components/Navigation';
-import Hero from '@/components/Hero';
 import Footer from '@/components/Footer';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -58,7 +57,15 @@ export default function CalculatorPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
-      <Hero showCta={false} />
+
+      {/* Hero Section */}
+      <div className="bg-black py-20">
+        <div className="container-1440">
+          <h1 className="text-5xl md:text-6xl font-bold text-white text-center">
+            Company car BIK rate
+          </h1>
+        </div>
+      </div>
 
       {/* Calculator Section */}
       <div className="container-1440 py-16">
