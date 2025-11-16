@@ -1,6 +1,6 @@
 import { TaxBrackets, StudentLoanRates, BiKRates } from '@/types';
 
-// 2024/25 UK Tax Rates
+// 2025/26 UK Tax Rates
 export const TAX_BRACKETS: TaxBrackets = {
   personalAllowance: 12570,
   basicRate: {
@@ -13,18 +13,18 @@ export const TAX_BRACKETS: TaxBrackets = {
   }
 };
 
-// 2024/25 Student Loan Rates
+// 2025/26 Student Loan Rates
 export const STUDENT_LOAN_RATES: StudentLoanRates = {
   plan1: {
-    threshold: 22015,
+    threshold: 26065,
     rate: 0.09
   },
   plan2: {
-    threshold: 27295,
+    threshold: 28470,
     rate: 0.09
   },
   plan4: {
-    threshold: 27660,
+    threshold: 32745,
     rate: 0.09
   },
   plan5: {

@@ -25,7 +25,7 @@ export function calculateSalarySacrifice(inputs: CalculatorInputs): CalculationR
   // Calculate income tax
   const incomeTax = calculateIncomeTax(adjustedSalary);
 
-  // Calculate National Insurance (12% on earnings between £12,570 and £50,270, 2% above)
+  // Calculate National Insurance (8% on earnings between £12,584 and £50,284, 2% above)
   const nationalInsurance = calculateNationalInsurance(adjustedSalary);
 
   // Calculate student loan repayment
@@ -47,7 +47,7 @@ export function calculateSalarySacrifice(inputs: CalculatorInputs): CalculationR
   // Calculate monthly savings (what they would have paid in tax/NI on the sacrificed amount)
   const taxBracket = getTaxBracket(salary);
   const taxRate = taxBracket === 'basic' ? 0.20 : taxBracket === 'higher' ? 0.40 : 0.45;
-  const niRate = taxBracket === 'basic' ? 0.12 : 0.02;
+  const niRate = taxBracket === 'basic' ? 0.08 : 0.02;
   const monthlySavings = (annualLease * (taxRate + niRate)) / 12;
 
   // Calculate pension impact (reduction in pension contributions due to lower salary)
@@ -115,16 +115,16 @@ function calculateIncomeTax(salary: number): number {
 
 function calculateNationalInsurance(salary: number): number {
   let ni = 0;
-  
-  // Primary threshold: £12,570
-  const primaryThreshold = 12570;
-  // Upper earnings limit: £50,270
-  const upperEarningsLimit = 50270;
 
-  // 12% on earnings between primary threshold and upper earnings limit
+  // Primary threshold: £12,584 (2025/26)
+  const primaryThreshold = 12584;
+  // Upper earnings limit: £50,284 (2025/26)
+  const upperEarningsLimit = 50284;
+
+  // 8% on earnings between primary threshold and upper earnings limit (2025/26)
   const basicRateIncome = Math.min(salary, upperEarningsLimit) - primaryThreshold;
   if (basicRateIncome > 0) {
-    ni += basicRateIncome * 0.12;
+    ni += basicRateIncome * 0.08;
   }
 
   // 2% on earnings above upper earnings limit

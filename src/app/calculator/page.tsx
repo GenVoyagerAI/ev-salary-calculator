@@ -9,10 +9,28 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { getBikRate } from '@/lib/co2-bik-rates';
 import { formatCurrency } from '@/lib/utils';
+import { featureFlags } from '@/lib/featureFlags';
+import dynamic from 'next/dynamic';
+
+// Dynamically import the new multi-screen calculator
+const MultiScreenCalculator = dynamic(
+  () => import('@/components/calculator/multiscreen/MultiScreenCalculator'),
+  { ssr: false }
+);
 
 type ViewMode = 'annual' | 'monthly';
 
 export default function CalculatorPage() {
+  // If feature flag is enabled, render the new multi-screen calculator
+  if (featureFlags.multiScreenCalculator) {
+    return <MultiScreenCalculator />;
+  }
+
+  // Otherwise, render the original calculator (code below)
+  return <OriginalCalculator />;
+}
+
+function OriginalCalculator() {
   const [listPrice, setListPrice] = useState<string>('35000');
   const [fuelType, setFuelType] = useState<string>('petrol');
   const [co2Emissions, setCo2Emissions] = useState<string>('120');
