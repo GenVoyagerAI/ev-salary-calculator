@@ -8,13 +8,14 @@ import { useCalculator } from '../context/CalculatorContext';
 import { calculateSalarySacrifice } from '@/lib/calculations';
 import { formatCurrency, formatMonthlyCurrency, cn } from '@/lib/utils';
 import { ExpandableSection } from '../shared/ExpandableSection';
+import { generateResultsPDF } from '@/lib/pdfGenerator';
 
 /**
  * Results Step (Step 5)
  * Shows the calculated savings with detailed breakdown and important info
  */
 export function ResultsStep() {
-  const { salary, selectedCar, goToStep, setResults } = useCalculator();
+  const { salary, selectedCar, goToStep, setResults, resetCalculator } = useCalculator();
   const [isCalculating, setIsCalculating] = useState(true);
   const [showBreakdown, setShowBreakdown] = useState(false);
   const [calculationResults, setCalculationResults] = useState<{
@@ -97,15 +98,35 @@ export function ResultsStep() {
   }, [salary, selectedCar, goToStep, setResults]);
 
   const handleEmailResults = () => {
-    alert('Email functionality coming soon!');
+    if (!salary || !selectedCar || !calculationResults) return;
+
+    const subject = `My EV Salary Sacrifice Savings - ${selectedCar.fullName}`;
+    const body = `I could save £${calculationResults.fourYearSavings.toLocaleString()} over 4 years (£${calculationResults.monthlySavings.toLocaleString()}/month) with a ${selectedCar.fullName} on salary sacrifice!
+
+Current take-home: £${calculationResults.currentTakeHome.toLocaleString()}/month
+With ${selectedCar.fullName}: £${calculationResults.newTakeHome.toLocaleString()}/month + brand new car
+
+Calculate your own savings: ${window.location.origin}/calculator`;
+
+    window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
   const handleDownloadPDF = () => {
-    alert('PDF download coming soon!');
+    if (!salary || !selectedCar || !calculationResults) return;
+
+    generateResultsPDF({
+      salary,
+      car: selectedCar,
+      fourYearSavings: calculationResults.fourYearSavings,
+      monthlySavings: calculationResults.monthlySavings,
+      currentTakeHome: calculationResults.currentTakeHome,
+      newTakeHome: calculationResults.newTakeHome,
+      bikTaxMonthly: calculationResults.bikTaxMonthly,
+    });
   };
 
   const handleTryAnotherCar = () => {
-    goToStep(3);
+    resetCalculator();
   };
 
   // Get tax bracket info
