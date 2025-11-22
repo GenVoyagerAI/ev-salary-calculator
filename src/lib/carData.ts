@@ -105,11 +105,30 @@ export async function getCarById(id: string): Promise<Car | null> {
 }
 
 /**
+ * Database Car interface (snake_case from Supabase)
+ */
+interface DatabaseCar {
+  id: string;
+  make: string;
+  model: string;
+  full_name: string;
+  list_price: string | number;
+  range: number;
+  monthly_lease_rate: string | number;
+  bik_rate: string | number;
+  co2_emissions: number;
+  fuel_type: 'electric' | 'hybrid';
+  is_active?: boolean;
+  created_at?: string;
+  updated_at?: string;
+}
+
+/**
  * Map database car object (snake_case) to interface (camelCase)
  * @param dbCar - Car object from database
  * @returns Car object with camelCase properties
  */
-function mapDatabaseCarToInterface(dbCar: any): Car {
+function mapDatabaseCarToInterface(dbCar: DatabaseCar): Car {
   return {
     id: dbCar.id,
     make: dbCar.make,
