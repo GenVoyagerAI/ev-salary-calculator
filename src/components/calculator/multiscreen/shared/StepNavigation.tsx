@@ -37,7 +37,7 @@ export function StepNavigation({
           disabled={nextDisabled}
           size="lg"
           className={cn(
-            'min-w-[160px] transition-all',
+            'min-w-[160px] transition-all cursor-pointer',
             nextVariant === 'success' &&
               'bg-green-600 hover:bg-green-700 text-white'
           )}
@@ -51,7 +51,7 @@ export function StepNavigation({
       {showBack && onBack && (
         <button
           onClick={onBack}
-          className="flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors"
+          className="flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors cursor-pointer"
         >
           <ChevronLeft className="mr-1 h-4 w-4" />
           Back

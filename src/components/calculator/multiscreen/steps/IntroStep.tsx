@@ -29,7 +29,7 @@ export function IntroStep() {
           <Button
             onClick={nextStep}
             size="lg"
-            className="min-w-[220px] text-base"
+            className="min-w-[220px] text-base cursor-pointer"
           >
             Calculate my savings
             <ChevronRight className="ml-2 h-5 w-5" />

@@ -72,7 +72,7 @@ export function CarOverviewStep() {
               {/* Change Car Link */}
               <button
                 onClick={handleChangeCar}
-                className="flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800 transition-colors"
+                className="flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800 transition-colors cursor-pointer"
               >
                 Change car
                 <X className="h-3 w-3" />
@@ -87,7 +87,7 @@ export function CarOverviewStep() {
           <Button
             onClick={nextStep}
             size="lg"
-            className="min-w-[200px] bg-green-600 hover:bg-green-700 text-white"
+            className="min-w-[200px] bg-green-600 hover:bg-green-700 text-white cursor-pointer"
           >
             Show my savings
             <ChevronRight className="ml-2 h-4 w-4" />
@@ -96,7 +96,7 @@ export function CarOverviewStep() {
           {/* Back button */}
           <button
             onClick={previousStep}
-            className="flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors"
+            className="flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors cursor-pointer"
           >
             ← Back
           </button>

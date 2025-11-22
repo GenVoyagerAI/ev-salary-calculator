@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
 import { useCalculator } from '../context/CalculatorContext';
 import { StepNavigation } from '../shared/StepNavigation';
 import { getTaxBracketInfo } from '@/lib/tax-rates';
@@ -78,7 +77,7 @@ export function SalaryStep() {
               What is your annual salary?
             </Label>
             <div className="relative max-w-md mx-auto">
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-lg">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-2xl">
                 £
               </span>
               <Input
@@ -87,7 +86,7 @@ export function SalaryStep() {
                 value={displayValue}
                 onChange={handleInputChange}
                 placeholder=""
-                className="text-lg h-14 pl-8 pr-4 text-center"
+                className="text-2xl h-16 pl-10 pr-4 text-left"
                 autoFocus
               />
             </div>
@@ -95,13 +94,10 @@ export function SalaryStep() {
 
           {/* Tax Band Feedback */}
           {getTaxBandMessage() && (
-            <div className="flex justify-center">
-              <Badge
-                variant="secondary"
-                className="bg-blue-100 text-blue-700 border-blue-200 px-4 py-2 text-sm"
-              >
+            <div className="max-w-md mx-auto">
+              <div className="bg-blue-100 text-blue-700 border border-blue-200 px-4 py-2 text-sm rounded-lg text-center">
                 {getTaxBandMessage()}
-              </Badge>
+              </div>
             </div>
           )}
         </div>

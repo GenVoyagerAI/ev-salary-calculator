@@ -26,14 +26,17 @@ export function CarSelectionStep() {
 
   // Update search results when query changes
   useEffect(() => {
-    if (searchQuery.trim()) {
-      const results = searchCars(searchQuery);
-      setSearchResults(results);
-      setShowDropdown(true);
-    } else {
-      setSearchResults([]);
-      setShowDropdown(false);
+    async function fetchCars() {
+      if (searchQuery.trim()) {
+        const results = await searchCars(searchQuery);
+        setSearchResults(results);
+        setShowDropdown(true);
+      } else {
+        setSearchResults([]);
+        setShowDropdown(false);
+      }
     }
+    fetchCars();
   }, [searchQuery]);
 
   // Close dropdown when clicking outside
@@ -102,7 +105,7 @@ export function CarSelectionStep() {
                     key={car.id}
                     onClick={() => handleCarSelect(car)}
                     className={cn(
-                      'w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-b-0',
+                      'w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-b-0 cursor-pointer',
                       selectedCarId === car.id && 'bg-blue-50'
                     )}
                   >
